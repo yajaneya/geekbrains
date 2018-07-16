@@ -19,6 +19,7 @@ public class HomeWork1 {
         System.out.println(vyr(4.433, 34.343, 23424.5343, -32343));
         System.out.println(vyr(4343, -6, 5343, 0.4343));
         System.out.println(vyr(0, 0, 0, 1));
+        System.out.println(vyr(43, 33, 4, 0));
         System.out.println("");
 
         // пункт 4 ДЗ
@@ -65,7 +66,11 @@ public class HomeWork1 {
     }
 
     public static double vyr(double a, double b, double c, double d) {
-        return a * (b + (c / d));
+        if (d != 0) return a * (b + (c / d));
+        else {
+            System.out.println("ДЕЛЕНИЕ НА НОЛЬ!");
+            return 0;
+        }
     }
 
 
