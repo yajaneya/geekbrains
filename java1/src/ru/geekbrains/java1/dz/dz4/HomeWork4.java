@@ -14,6 +14,7 @@ public class HomeWork4 {
     public static final char DOT_O = 'O';
     public static Scanner sc = new Scanner(System.in);
     public static Random rand = new Random();
+    public static boolean route = true;
 
     public static void main(String[] args) {
         initMap();
@@ -90,39 +91,75 @@ public class HomeWork4 {
                     sx = i; // запоминаем координаты последнего хода
                     sy = j; // запоминаем координаты последнего хода
                     // осматриваемся вокруг этой клетки и запоминаем координаты пустой
-                    // интеллект не доработанный, так как не отслеживает длинных последовательностей
+                    // интеллект не доработанный, так как полностью не отслеживает длинных последовательностей
+                    // особенно, по диагонали
                     // (к сожалению, не хватило времени состряпать более полный алгоритм)
-                    if (isCellValid(sx, sy+1)) {
-                        x=sx;
-                        y=sy+1;
-                    } else if (isCellValid(sx+1, sy+1)) {
-                        x=sx+1;
-                        y=sy+1;
-                    } else if (isCellValid(sx+1, sy)) {
-                        x=sx+1;
-                        y=sy;
-                    } else if (isCellValid(sx+1, sy-1)) {
-                        x=sx+1;
-                        y=sy-1;
-                    } else if (isCellValid(sx, sy-1)) {
-                        x=sx;
-                        y=sy-1;
-                    } else if (isCellValid(sx-1, sy-1)) {
-                        x=sx-1;
-                        y=sy-1;
-                    } else if (isCellValid(sx-1, sy)) {
-                        x=sx-1;
-                        y=sy;
-                    } else if (isCellValid(sx-1, sy+1)) {
-                        x=sx-1;
-                        y=sy+1;
+                    if (route) {
+                        if (isCellValid(sx+1, sy)) {
+                            x=sx+1;
+                            y=sy;
+                        } else if (isCellValid(sx+1, sy+1)) {
+                            x=sx+1;
+                            y=sy+1;
+                        } else if (isCellValid(sx, sy+1)) {
+                            x=sx;
+                            y=sy+1;
+                        } else if (isCellValid(sx-1, sy+1)) {
+                            x=sx-1;
+                            y=sy+1;
+                        } else if (isCellValid(sx-1, sy)) {
+                            x=sx-1;
+                            y=sy;
+                        } else if (isCellValid(sx-1, sy-1)) {
+                            x=sx-1;
+                            y=sy-1;
+                        } else if (isCellValid(sx, sy-1)) {
+                            x=sx;
+                            y=sy-1;
+                        } else if (isCellValid(sx+1, sy-1)) {
+                            x = sx + 1;
+                            y = sy - 1;
+                        } else {
+                            // если все клетки вокруг заняты - выбираем случайную клетку
+                            do {
+                                x = rand.nextInt(SIZE);
+                                y = rand.nextInt(SIZE);
+                            } while (!isCellValid(x,y));
+                        }
                     } else {
-                        // если все клетки вокруг заняты - выбираем случайную клетку
-                        do {
-                            x = rand.nextInt(SIZE);
-                            y = rand.nextInt(SIZE);
-                        } while (!isCellValid(x,y));
+                        if (isCellValid(sx, sy + 1)) {
+                            x = sx;
+                            y = sy + 1;
+                        } else if (isCellValid(sx + 1, sy + 1)) {
+                            x = sx + 1;
+                            y = sy + 1;
+                        } else if (isCellValid(sx + 1, sy)) {
+                            x = sx + 1;
+                            y = sy;
+                        } else if (isCellValid(sx + 1, sy - 1)) {
+                            x = sx + 1;
+                            y = sy - 1;
+                        } else if (isCellValid(sx, sy - 1)) {
+                            x = sx;
+                            y = sy - 1;
+                        } else if (isCellValid(sx - 1, sy - 1)) {
+                            x = sx - 1;
+                            y = sy - 1;
+                        } else if (isCellValid(sx - 1, sy)) {
+                            x = sx - 1;
+                            y = sy;
+                        } else if (isCellValid(sx - 1, sy + 1)) {
+                            x = sx - 1;
+                            y = sy + 1;
+                        } else {
+                            // если все клетки вокруг заняты - выбираем случайную клетку
+                            do {
+                                x = rand.nextInt(SIZE);
+                                y = rand.nextInt(SIZE);
+                            } while (!isCellValid(x, y));
+                        }
                     }
+                    route=!route;
                 }
             }
         }
@@ -133,7 +170,6 @@ public class HomeWork4 {
                 oldfield[i][j] = map[i][j];
             }
         }
-
     }
 
     public static boolean isCellValid(int x, int y) {
