@@ -10,4 +10,5 @@ public interface QueueInterface {
     boolean isFull();
 
     void display();
+
 }
