@@ -1,42 +1,34 @@
 package ru.geekbrains.Alg_SD.dz.dz3;
 
 /*
-*** Класс для организации очереди ***
+*** Класс для организации приоритетной очереди ***
 
 Поля класса
 -----------
 private int[] elements; - массив, содержащий элементы очереди
-private int front; - маркер начала очереди
-private int rear; - маркер конца очереди
 private int items; - количество элементов очереди
 private int size; - максимальный размер очереди
 
 
 Методы класса
 -------------
-public boolean insert(int value) - добавляет элемент в очередь
-public int peek() - выводит текущий элемент очереди
+public boolean insert(int value) - добавляет элемент в соответствующее место очереди
+public int peek() - выводит текущий элемент
 public int remove() - удаляет элемент очереди
 public boolean isEmpty() - показатель пустоты очереди
 public boolean isFull() - показатель заполненности очереди
 public void display() - выводит текущее состояние очереди в консоль
 
-
 */
 
-public class Queue implements QueueInterface {
-
+public class PriorityQueue implements QueueInterface {
     private int[] elements;
-    private int front;
-    private int rear;
     private int items;
     private int size;
 
-    public Queue(int size) {
+    public PriorityQueue(int size) {
         this.size = size;
         this.elements = new int[size];
-        this.front = 0;
-        this.rear = -1;
         this.items = 0;
     }
 
@@ -46,16 +38,25 @@ public class Queue implements QueueInterface {
             System.out.println("Очередь заполнена");
             return false;
         }
-        if (rear == size-1)
-            rear = -1;
-        elements[++rear] = value;
-        items++;
-        return true;
+        if (items == 0)
+            elements[items++] = value;
+        else {
+            int i;
+            for (i=items-1; i>=0; i--) {
+                if (value > elements[i])
+                    elements[i+1] = elements[i];
+                else
+                    break;
+            }
+            elements[i+1] = value;
+            items++;
+        }
+        return false;
     }
 
     @Override
     public int peek() {
-        return elements[front];
+        return elements[items-1];
     }
 
     @Override
@@ -63,13 +64,8 @@ public class Queue implements QueueInterface {
         if (isEmpty()) {
             System.out.println("Очередь пуста");
             return 0;
-        } else {
-            int temp = elements[front++];
-            if (front == size)
-                front = 0;
-            items--;
-            return temp;
         }
+        return elements[--items];
     }
 
     @Override
@@ -85,11 +81,8 @@ public class Queue implements QueueInterface {
     @Override
     public void display() {
         System.out.println("Содержимое очереди:");
-        int index = front;
         for (int i=0; i<items; i++) {
-            if ((index!=front)&&(index == rear+1)) break;
-            if (index == size) index = 0;
-            System.out.print(elements[index++] + "   ");
+            System.out.print(elements[i] + "   ");
         }
         System.out.println();
     }

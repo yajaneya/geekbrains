@@ -1,7 +1,7 @@
 package ru.geekbrains.Alg_SD.dz.dz3;
 
 /*
-*** Класс для организации очереди ***
+*** Класс для организации двусторонней очереди (деки) ***
 
 Поля класса
 -----------
@@ -10,13 +10,14 @@ private int front; - маркер начала очереди
 private int rear; - маркер конца очереди
 private int items; - количество элементов очереди
 private int size; - максимальный размер очереди
+boolean left; - указатель задействуемого края очереди (true - левый край, false - правый край)
 
 
 Методы класса
 -------------
-public boolean insert(int value) - добавляет элемент в очередь
-public int peek() - выводит текущий элемент очереди
-public int remove() - удаляет элемент очереди
+public boolean insert(int value) - добавляет элемент в очередь слева или справа (зависит от поля left)
+public int peek() - выводит текущий элемент очереди слева или справа (зависит от поля left)
+public int remove() - удаляет элемент очереди слева или справа (зависит от поля left)
 public boolean isEmpty() - показатель пустоты очереди
 public boolean isFull() - показатель заполненности очереди
 public void display() - выводит текущее состояние очереди в консоль
@@ -24,20 +25,24 @@ public void display() - выводит текущее состояние оче�
 
 */
 
-public class Queue implements QueueInterface {
+
+
+public class Deque implements QueueInterface {
 
     private int[] elements;
     private int front;
     private int rear;
     private int items;
     private int size;
+    boolean left;
 
-    public Queue(int size) {
+    public Deque(int size) {
         this.size = size;
         this.elements = new int[size];
         this.front = 0;
         this.rear = -1;
         this.items = 0;
+        this.left = true;
     }
 
     @Override
@@ -46,16 +51,26 @@ public class Queue implements QueueInterface {
             System.out.println("Очередь заполнена");
             return false;
         }
-        if (rear == size-1)
-            rear = -1;
-        elements[++rear] = value;
-        items++;
-        return true;
+        if (left) {
+            if (front == 0)
+                front = size-1;
+            else
+                front--;
+            elements[front] = value;
+            items++;
+            return true;
+        } else {
+            if (rear == size-1)
+                rear = -1;
+            elements[++rear] = value;
+            items++;
+            return true;
+        }
     }
 
     @Override
     public int peek() {
-        return elements[front];
+        return left ? elements[front] : elements[rear];
     }
 
     @Override
@@ -64,10 +79,19 @@ public class Queue implements QueueInterface {
             System.out.println("Очередь пуста");
             return 0;
         } else {
-            int temp = elements[front++];
-            if (front == size)
-                front = 0;
-            items--;
+            int temp;
+            if (left) {
+                temp = elements[front++];
+                if (front == size)
+                    front = 0;
+                items--;
+            } else {
+                temp = elements[--rear];
+                if (rear == 0)
+                    rear = size;
+                items--;
+            }
+
             return temp;
         }
     }
