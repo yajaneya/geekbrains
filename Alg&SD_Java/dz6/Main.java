@@ -1,4 +1,4 @@
-﻿package ru.geekbrains.Alg_SD.dz.dz6;
+package ru.geekbrains.Alg_SD.dz.dz6;
 
 public class Main {
 
@@ -13,8 +13,8 @@ public class Main {
         // аргументы: Количество деревьев, количество уровней дерева, максимальное значение узла (модуль)
         trees (20, 6, 100);
 
-        // модуль тестирует класс Tree
-  //              testTree();
+        // метод тестирует класс Tree
+//        testTree();
 
     }
 
@@ -52,6 +52,7 @@ public class Main {
 
         tree.display();
         System.out.println("Уровень дерева: " + tree.getLevelTree());
+        System.out.println("Размер дерева: " + tree.getSize());
         System.out.println("Балансированность: " + tree.isTreeBalanced());
 
         System.out.println();
@@ -75,10 +76,20 @@ public class Main {
         System.out.println("Удален из дерева: " + tree.remove(60));;
         System.out.println();
         tree.display();
+        System.out.println("Уровень дерева: " + tree.getLevelTree());
+        System.out.println("Размер дерева: " + tree.getSize());
 
-        System.out.println("Удален из дерева: " + tree.remove(64));;
+        System.out.println("Удален из дерева: " + tree.remove(65));;
         System.out.println();
         tree.display();
+        System.out.println("Уровень дерева: " + tree.getLevelTree());
+        System.out.println("Размер дерева: " + tree.getSize());
+
+        System.out.println("Удален из дерева: " + tree.remove(23));;
+        System.out.println();
+        tree.display();
+        System.out.println("Уровень дерева: " + tree.getLevelTree());
+        System.out.println("Размер дерева: " + tree.getSize());
 
     }
 }
