@@ -14,7 +14,7 @@ public class Main {
         trees (20, 6, 100);
 
         // модуль тестирует класс Tree
-                testTree();
+  //              testTree();
 
     }
 
