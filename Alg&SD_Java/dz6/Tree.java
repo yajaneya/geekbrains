@@ -4,10 +4,10 @@ import java.util.Stack;
 
 public class Tree implements TreeIF{
 
-    private Node root;
-    private int size;
-    private int levelTree;
-    private boolean isBalans;
+    private Node root; // корневой узел дерева
+    private int size; // размер дерева
+    private int levelTree; // уровень дерева
+    private boolean isBalans; // показатель сбалансированности дерева
 
     public Tree() {
         this.size = 0;
@@ -82,7 +82,6 @@ public class Tree implements TreeIF{
         }
 
         // Если у удаляемого узла нет правого потомка
-        // блок не доработан - нет части по указанию новых уровней узлов после смещения ветки
         else  if (current.getRightChild() == null) {
             if (current == null) {
                 root = current.getLeftChild();
@@ -91,18 +90,20 @@ public class Tree implements TreeIF{
             } else {
                 parent.setRightChild(current.getLeftChild());
             }
+            levelUp (current);
         }
 
         // Если у удаляемого узла нет левого потомка
-        // блок не доработан - нет части по указанию новых уровней узлов после смещения ветки
         else  if (current.getLeftChild() == null) {
             if (current == null) {
+                root = current.getRightChild();
                 root = current.getRightChild();
             } else if (isLeftChild) {
                 parent.setLeftChild(current.getRightChild());
             } else {
                 parent.setRightChild(current.getRightChild());
             }
+            levelUp (current);
         }
 
         // Если есть оба потомка
@@ -120,6 +121,7 @@ public class Tree implements TreeIF{
             succesor.setLeftChild(current.getLeftChild());
         }
         size--;
+        levelTree(root, false);
         return current.getData();
     }
 
@@ -183,8 +185,10 @@ public class Tree implements TreeIF{
             while (!globalStack.isEmpty()) {
                 Node tempNode = globalStack.pop();
                 if (tempNode != null) {
-                    System.out.print(tempNode.getKey());
-//                    System.out.print(tempNode.getLevel() + " - " + tempNode.getKey());
+                    // вывод узла с указанием значения
+//                    System.out.print(tempNode.getKey());
+                    // вывод узла с указанием уровня и значения
+                    System.out.print(tempNode.getLevel() + " - " + tempNode.getKey());
                     localStack.push(tempNode.getLeftChild());
                     localStack.push(tempNode.getRightChild());
                     if (tempNode.getLeftChild() != null || tempNode.getRightChild() != null) {
@@ -264,6 +268,7 @@ public class Tree implements TreeIF{
     }
 
     private void levelTree (Node rootNode, boolean in) {
+        if (!in) levelTree = 0;
         if (rootNode != null) {
         levelTree(rootNode.getLeftChild(), true);
         levelTree(rootNode.getRightChild(), true);
@@ -287,5 +292,14 @@ public class Tree implements TreeIF{
         }
         return isBalans;
     }
+
+    private void levelUp (Node rootNode) {
+        if (rootNode != null) {
+            levelUp(rootNode.getLeftChild());
+            levelUp(rootNode.getRightChild());
+            rootNode.setLevel(rootNode.getLevel()-1);
+        }
+    }
+
 
 }
