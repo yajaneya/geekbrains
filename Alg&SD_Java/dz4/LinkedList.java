@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
-public class LinkedList<T> implements LinkedListIF<T>, Iterable{
+public class LinkedList<T> implements LinkedListIF<T>, Iterable<T>{
 
     protected Link<T> first;
     protected int size;

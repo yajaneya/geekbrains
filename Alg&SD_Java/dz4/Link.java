@@ -19,4 +19,6 @@ public class Link<T> {
     public void setNext(Link<T> next) {
         this.next = next;
     }
+
+
 }

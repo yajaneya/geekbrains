@@ -4,6 +4,9 @@ package ru.geekbrains.Alg_SD.dz.dz4;
 Нынче без описаний и полных комментариев.
  */
 
+import java.util.List;
+import java.util.ListIterator;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -121,7 +124,7 @@ public class Main {
         System.out.println("**************************************");
         System.out.println("*** Тестирование Итератора Cвязанного списка ***");
         System.out.println("**************************************");
-        LinkedList <Integer> list = new LinkedList<Integer>();
+        LinkedList <Integer> list = new LinkedList();
         list.display();
         list.insert(12);
         list.display();
@@ -130,7 +133,13 @@ public class Main {
         list.insert(234);
         list.insert(21);
         list.display();
-        LinkIterator iterator = new LinkIterator(list);
+        System.out.println("----------------------------");
+        System.out.println("Вывод списка через foreach:");
+        for (Integer i : list) {
+            System.out.println(i);
+        }
+        System.out.println("----------------------------");
+        LinkIterator iterator = (LinkIterator) list.iterator();
         iterator.reset();
         System.out.println("При сбросе итератора: " + iterator.getCurrent().getLink());
         iterator.nextLink();

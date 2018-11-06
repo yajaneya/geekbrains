@@ -4,11 +4,12 @@ import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
-public class LinkIterator<T> implements Iterator{
+public class LinkIterator<T> implements Iterator<T>{
 
     private Link <T> current;
     private Link <T> previos;
     private LinkedList <T> list;
+    private boolean firstIterate = true;
 
     public LinkIterator(LinkedList<T> list) {
         this.list = list;
@@ -64,12 +65,23 @@ public class LinkIterator<T> implements Iterator{
 
     @Override
     public boolean hasNext() {
-        return (current != null);
+        if (firstIterate) {
+            firstIterate = false;
+            current = null;
+            return list.getFirst() != null;
+        } else
+            return current.getNext() != null;
     }
 
     @Override
-    public Link <T> next() {
-        return current;
+    public T next() {
+        if (current == null)
+            current = list.getFirst();
+        else {
+            previos = current;
+            current = current.getNext();
+        }
+        return current.getLink();
     }
 
     @Override
@@ -85,10 +97,5 @@ public class LinkIterator<T> implements Iterator{
                 current = current.getNext();
             }
         }
-    }
-
-    @Override
-    public void forEachRemaining(Consumer action) {
-
     }
 }
