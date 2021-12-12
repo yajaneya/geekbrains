@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane fx:id="MainAnchorPane" prefHeight="256.0" prefWidth="348.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ru.geekbrains.java2.lesson8.Teacher.Client.FXMLDocumentController">
+  <children>
+    <VBox layoutX="0.0" layoutY="0.0" prefHeight="219.0" prefWidth="348.0">
+      <children>
+        <HBox fx:id="authPanel">
+          <TextField fx:id="loginField" HBox.hgrow="ALWAYS" />
+          <PasswordField fx:id="passwordField" HBox.hgrow="ALWAYS" />
+          <Button fx:id="connectBtn" onAction="#sendAuth" text="Авторизация" HBox.hgrow="ALWAYS" />
+        </HBox>
+        <TextArea fx:id="TextArea" editable="false" prefHeight="219.0" prefWidth="348.0" promptText="" wrapText="true" />
+      </children>
+    </VBox>
+    <HBox fx:id="msgPanel" layoutX="0.0" layoutY="219.0" prefHeight="37.0" prefWidth="348.0">
+      <children>
+        <TextField fx:id="TextField" onAction="#sendMsg" prefHeight="37.0" prefWidth="288.0" promptText="Введите текст" />
+        <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMsg" prefHeight="37.0" prefWidth="99.0" text="Отправить" />
+      </children>
+    </HBox>
+  </children>
+</AnchorPane>
